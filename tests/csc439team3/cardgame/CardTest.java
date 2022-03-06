@@ -27,7 +27,9 @@ class CardTest {
     void setNumber() {
         card.setNumber(5);
         assertThat(card.getNumber()).isEqualTo(5);
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->card.setNumber(0));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->card.setNumber(-1));
+        Card joker = new Card(Card.Suit.JOKER, 0);
+        assertThat(joker.getNumber()).isEqualTo(0);
     }
 
     @Test
@@ -49,5 +51,28 @@ class CardTest {
         assertThat(card.compareTo(lower)).isEqualTo(1);
         assertThat(card.compareTo(higher)).isEqualTo(-1);
         assertThat(card.compareTo(equal)).isEqualTo(0);
+    }
+
+    @Test
+    void getScore() {
+        assertThat(card.getScore()).isEqualTo(10);
+    }
+
+    @Test
+    void setScore() {
+        card.setNumber(5);
+        card.setScore();
+        assertThat(card.getScore()).isEqualTo(5);
+    }
+
+    @Test
+    void flipCard() {
+        card.flipCard();
+        assertThat(card.isFaceDown()).isEqualTo(false);
+    }
+
+    @Test
+    void isFaceDown() {
+        assertThat(card.isFaceDown()).isEqualTo(true);
     }
 }
