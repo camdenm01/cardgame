@@ -12,7 +12,7 @@ public class Card {
         SPADE
     }
     private Suit suit;
-    private int number; //face cards represented as follows J=10, Q=11, K=12, A=13
+    private int number; //face cards represented as follows J=11, Q=12, K=13, A=14
 
     /**
      * Card constructor sets members to arguments.
@@ -53,7 +53,7 @@ public class Card {
      * @param number card number
      */
     public void setNumber(int number) {
-        if(number<2 || number > 13){
+        if(number<2 || number > 14){
             throw new IllegalArgumentException();
         }
         this.number = number;
