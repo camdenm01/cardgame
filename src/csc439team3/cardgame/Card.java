@@ -9,10 +9,13 @@ public class Card {
         CLUB,
         DIAMOND,
         HEART,
-        SPADE
+        SPADE,
+        JOKER
     }
     private Suit suit;
-    private int number; //face cards represented as follows J=11, Q=12, K=13, A=14
+    private int number; //face cards represented as follows J=11, Q=12, K=13, A=1, Joker=0
+    private int score; // A=1, J,Q=10, K=0, Joker=-2
+    private boolean faceDown = true;
 
     /**
      * Card constructor sets members to arguments.
@@ -41,6 +44,12 @@ public class Card {
     }
 
     /**
+     * Returns score of card
+     * @return card score
+     */
+    public int getScore(){return score;}
+
+    /**
      * Sets card suit
      * @param suit card suit
      */
@@ -53,10 +62,30 @@ public class Card {
      * @param number card number
      */
     public void setNumber(int number) {
-        if(number<2 || number > 14){
+        if(number<0 || number > 13){
             throw new IllegalArgumentException();
         }
         this.number = number;
+        setScore();
+    }
+
+    /**
+     * sets card score
+     */
+    public void setScore(){
+        if(number == 0){
+            score = -2;
+        }
+        else if (number == 11 || number == 12){
+            score = 10;
+        }
+        else if (number == 13){
+            score = 0;
+        }
+        else {
+            score = number;
+        }
+
     }
 
     /**
@@ -90,5 +119,20 @@ public class Card {
         else{
             return 0;
         }
+    }
+
+    /**
+     * flips the card to face up
+     */
+    public void flipCard(){
+        faceDown = !faceDown;
+    }
+
+    /**
+     * Tells if card is currently face down and unreadable
+     * @return boolean if card is face down or up
+     */
+    public boolean isFaceDown(){
+        return faceDown;
     }
 }
