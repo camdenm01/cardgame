@@ -17,5 +17,12 @@ public class DeckTest {
         assertThat(deck.deck.size()).isEqualTo(104);
     }
 
+    @Test
+    void shuffle(){
+        Deck deck = new Deck(2);
+        deck.shuffle();
+        assertThat(deck.deck.get(0).printCard()).isNotEqualTo("A CLUB");
+    }
+
 
 }

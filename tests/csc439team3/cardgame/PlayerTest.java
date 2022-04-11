@@ -7,7 +7,7 @@ public class PlayerTest {
     @Test
     void createPlayer(){
         Player player = new Player();
-        assertThat(player.hand.length).isEqualTo(6);
+        assertThat(player.hand).isNotNull();
     }
 
 }
