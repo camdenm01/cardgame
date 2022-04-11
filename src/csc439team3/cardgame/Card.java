@@ -142,9 +142,9 @@ public class Card {
      * @return
      */
     public String printCard(){
-
+        if(faceDown) return "------ ";
         char value = ' ';
-        if(number > 1 && number <=10 ) return (number + " " +suit);
+        if(number > 1 && number <=10 ) return (number + " " +suit + " ");
         else{
             if(number ==1) value = 'A';
             else if(number == 11) value = 'J';

@@ -7,8 +7,11 @@ import java.util.ArrayList;
  */
 public class Player {
     public ArrayList<Card> hand = new ArrayList<>();
-
+    public int id;
+    static int idCount = 1;
     public Player(){
+        id = idCount;
+        idCount++;
     }
 
 }

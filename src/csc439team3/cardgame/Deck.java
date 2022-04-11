@@ -44,6 +44,7 @@ public class Deck {
                 deck.add(new Card(suit, j));
             }
         }
+        shuffle();
     }
 
     /**
