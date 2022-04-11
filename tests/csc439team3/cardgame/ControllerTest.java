@@ -1,11 +1,15 @@
 package csc439team3.cardgame;
 import org.junit.jupiter.api.Test;
+
+import java.io.InputStream;
+
 import static com.google.common.truth.Truth.assertThat;
 
 public class ControllerTest {
-    Controller controller = new Controller(2);
+    Controller controller = new Controller(new View());
     @Test
-    void checkNumberOfPlayers(){
+    void getPlayers(){
+        controller.getPlayers();
         assertThat(controller.numberOfPlayers).isEqualTo(2);
         assertThat(controller.players.length).isEqualTo(2);
     }
