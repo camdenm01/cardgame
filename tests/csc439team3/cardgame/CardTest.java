@@ -79,6 +79,7 @@ class CardTest {
     @Test
     void printCard(){
         Card king = new Card(Card.Suit.CLUB, 13);
+        king.flipCard();
         assertThat(king.printCard()).isEqualTo("K CLUB");
     }
 }

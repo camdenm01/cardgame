@@ -8,20 +8,24 @@ import java.util.Scanner;
  * player actions (drawing, discarding, flipping), and cycling through the players
  */
 public class Controller {
-    static int numberOfPlayers;
+    int numberOfPlayers;
     static Deck deck;
-    static Player[] players;
-    static View view;
+    public static Player[] players;
+    public View view;
 
     public Controller(View view){
         this.view = view;
     }
 
-    public void playGolf(){
+    /**
+     * This method cycle through players and calls the other methods to take a player's turn
+     * as long as there are cards in the deck
+     */
+    public int playGolf(){
         getPlayers();
         dealHand();
         try {
-            for (int i = 0; i < 9; i++) {
+            while(deck.deck.size() > 0) {
                 for (Player p : players) {
                     view.displayHand(p);
                     getAction(p);
@@ -30,10 +34,15 @@ public class Controller {
         }
         catch(Exception quit){
             view.quitGame();
+            return -1;
         }
+        return 0;
 
     }
 
+    /**
+     * Gets the number of players and adds that number to the player array
+     */
     public void getPlayers(){
         numberOfPlayers = view.getPlayers();
         players = new Player[numberOfPlayers];
@@ -59,6 +68,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Uses the view to get what action the current player will take
+     * @param p the current player
+     * @throws Exception for if the player chooses to quit
+     */
     public void getAction(Player p) throws Exception {
         int action = view.getAction();
         if(action == -1){
@@ -72,6 +86,10 @@ public class Controller {
         }
     }
 
+    /**
+     * This method is called when the player draws a card from the deck
+     * @param p current player
+     */
     public void drawFromPile(Player p){
         Card newCard = deck.deck.get(deck.deck.size()-1);
         deck.deck.remove(deck.deck.size()-1);
@@ -88,11 +106,16 @@ public class Controller {
 
     }
 
-    public void drawFromDiscard(Player p) throws Exception {
+    /**
+     * This method is called when the player pulls from the discard pile
+     * @param p current player
+     * @throws Exception if discard pile is empty, and when reprompted the player chooses to quit
+     */
+    public int drawFromDiscard(Player p) throws Exception {
         if(deck.discard.size() == 0){
             System.out.println("No cards in the discard pile");
             getAction(p);
-            return;
+            return -1;
         }
         Card newCard = deck.discard.get(deck.discard.size()-1);
         deck.discard.remove(deck.discard.size()-1);
@@ -102,7 +125,9 @@ public class Controller {
         int swapWith = view.keep(newCard);
         deck.discard.add(p.hand.get(swapWith - 1));
         p.hand.set(swapWith - 1, newCard);
+        return 0;
     }
+
 
 
 }
