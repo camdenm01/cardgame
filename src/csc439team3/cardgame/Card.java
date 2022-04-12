@@ -135,4 +135,23 @@ public class Card {
     public boolean isFaceDown(){
         return faceDown;
     }
+
+    /**
+     * A method to print the card so a player can see the cards they have.
+     * Replaces numbers with A, J, Q, K when appropriate.
+     * @return a string representation of the card
+     */
+    public String printCard(){
+        if(faceDown) return "------ ";
+        char value = ' ';
+        if(number > 1 && number <=10 ) return (number + " " +suit + " ");
+        else{
+            if(number ==1) value = 'A';
+            else if(number == 11) value = 'J';
+            else if(number == 12) value = 'Q';
+            else if(number == 13) value = 'K';
+        }
+        return (value + " " + suit);
+    }
+
 }
