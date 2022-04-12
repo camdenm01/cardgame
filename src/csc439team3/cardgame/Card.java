@@ -122,6 +122,15 @@ public class Card {
     }
 
     /**
+     * makes card face up
+     */
+    public void faceUp(){
+        if(isFaceDown()){
+            faceDown=false;
+        }
+    }
+
+    /**
      * flips the card to face up
      */
     public void flipCard(){

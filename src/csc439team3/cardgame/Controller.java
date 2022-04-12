@@ -25,10 +25,12 @@ public class Controller {
         getPlayers();
         dealHand();
         try {
-            while(deck.deck.size() > 0) {
+            while(deck.deck.size() > 1) {
                 for (Player p : players) {
                     view.displayHand(p);
+                    view.displayTopOfDiscard(deck);
                     getAction(p);
+                    System.out.println(deck.deck.size());
                 }
             }
         }
@@ -55,7 +57,7 @@ public class Controller {
 
 
     /**
-     * Gives a hand of 6 cards to each player with 2 random ones facing up.
+     * Gives a hand of 6 cards to each player with 2 random ones facing up. Also initializes discard pile for start of game.
      */
     public void dealHand(){
         for(Player p: players){
@@ -66,6 +68,9 @@ public class Controller {
             }
             Collections.shuffle(p.hand); //shuffle player's hand, effectively making the two face up cards in random spots
         }
+        deck.discard.add(deck.deck.get(deck.deck.size()-1)); //put the "top card" of the deck into the discard
+        deck.deck.remove(deck.deck.size()-1); //remove the card from the deck so it can't be pulled again
+        deck.discard.get(0).flipCard(); //flip the discarded card face up
     }
 
     /**
@@ -95,10 +100,16 @@ public class Controller {
         deck.deck.remove(deck.deck.size()-1);
         newCard.flipCard();
         int swapWith = view.keepOrDiscard(newCard);
-        if(swapWith == 0){
+        if(swapWith == 0){ //user declined to swap
             deck.discard.add(newCard);
+            int card = view.wantToReveal(); //see which card user wants to reveal
+            if(card != 0) {//user wants to reveal a card
+                if(p.hand.get(card-1).isFaceDown()){
+                    p.hand.get(card-1).flipCard();
+                }
+            }
         }
-        else{
+        else{ //user wants to swap
             deck.discard.add(p.hand.get(swapWith - 1));
             p.hand.set(swapWith - 1, newCard);
         }
@@ -112,18 +123,11 @@ public class Controller {
      * @throws Exception if discard pile is empty, and when reprompted the player chooses to quit
      */
     public int drawFromDiscard(Player p) throws Exception {
-        if(deck.discard.size() == 0){
-            System.out.println("No cards in the discard pile");
-            getAction(p);
-            return -1;
-        }
         Card newCard = deck.discard.get(deck.discard.size()-1);
         deck.discard.remove(deck.discard.size()-1);
-        if(newCard.isFaceDown()) {
-            newCard.flipCard();
-        }
         int swapWith = view.keep(newCard);
         deck.discard.add(p.hand.get(swapWith - 1));
+        deck.discard.get(deck.discard.size()-1).faceUp();
         p.hand.set(swapWith - 1, newCard);
         return 0;
     }
