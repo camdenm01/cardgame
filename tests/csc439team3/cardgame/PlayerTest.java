@@ -10,4 +10,12 @@ public class PlayerTest {
         assertThat(player.hand).isNotNull();
     }
 
+    @Test
+    void playerHasUniqueId(){
+        Player player = new Player();
+        Player player2 = new Player();
+        assertThat(player.id).isNotEqualTo(player2.id);
+
+    }
+
 }

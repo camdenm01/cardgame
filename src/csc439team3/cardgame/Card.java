@@ -139,7 +139,7 @@ public class Card {
     /**
      * A method to print the card so a player can see the cards they have.
      * Replaces numbers with A, J, Q, K when appropriate.
-     * @return
+     * @return a string representation of the card
      */
     public String printCard(){
         if(faceDown) return "------ ";
