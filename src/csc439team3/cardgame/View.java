@@ -2,6 +2,9 @@ package csc439team3.cardgame;
 
 import java.util.Scanner;
 
+/**
+ * View is the only class that displays output and gets input
+ */
 public class View {
     Scanner scanner = new Scanner(System.in);
 
