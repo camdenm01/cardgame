@@ -66,6 +66,12 @@ class CardTest {
     }
 
     @Test
+    void faceUp(){
+        card.faceUp();
+        assertThat(card.isFaceDown()).isFalse();
+    }
+
+    @Test
     void flipCard() {
         card.flipCard();
         assertThat(card.isFaceDown()).isEqualTo(false);

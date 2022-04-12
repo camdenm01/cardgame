@@ -16,7 +16,7 @@ public class View {
     }
 
     /**
-     * Prints the current player's hand so they can see their cards ina 2x3 grid
+     * Prints the current player's hand so they can see their cards in a 2x3 grid. Also shows top of discard pile.
      * @param player current player
      */
     public void displayHand(Player player){
@@ -29,12 +29,27 @@ public class View {
         }
     }
 
+    public void displayTopOfDiscard(Deck deck){
+        System.out.println("Top of discard pile: " + deck.discard.get(deck.discard.size()-1).printCard());
+    }
+
     /**
-     * Get use input if they want to draw from the deck or discard piles, or quit
+     * Get user input if they want to draw from the deck or discard piles, or quit
      * @return
      */
     public int getAction(){
         System.out.println("Draw card from [1]deck or [2]discard pile? Enter the corresponding number. Enter -1 to quit.");
+        int action = scanner.nextInt();
+        return action;
+    }
+
+    /**
+     * If a player declines to swap, they may reveal a card. This method gets which card to reaveal.
+     * @return card index to reveal
+     */
+    public int wantToReveal(){
+        System.out.println("Since you declined to swap in a card, you may still reveal a card.");
+        System.out.println("Enter the corresponding number or 0 if you do not want to reveal a card.");
         int action = scanner.nextInt();
         return action;
     }
