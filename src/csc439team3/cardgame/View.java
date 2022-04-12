@@ -29,6 +29,10 @@ public class View {
         }
     }
 
+    /**
+     * Displays the top of discard pile to player
+     * @param deck
+     */
     public void displayTopOfDiscard(Deck deck){
         System.out.println("Top of discard pile: " + deck.discard.get(deck.discard.size()-1).printCard());
     }
