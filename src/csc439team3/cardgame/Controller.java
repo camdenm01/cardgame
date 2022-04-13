@@ -111,6 +111,9 @@ public class Controller {
         }
         else{ //user wants to swap
             deck.discard.add(p.hand.get(swapWith - 1));
+            if(deck.discard.get(deck.discard.size()-1).isFaceDown()){
+                deck.discard.get(deck.discard.size()-1).flipCard();
+            }
             p.hand.set(swapWith - 1, newCard);
         }
 
