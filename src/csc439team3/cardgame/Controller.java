@@ -1,5 +1,7 @@
 package csc439team3.cardgame;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -9,8 +11,11 @@ import java.util.Scanner;
  */
 public class Controller {
     int numberOfPlayers;
+    int numberOfHoles;
+    int remainingHoles;
     static Deck deck;
     public static Player[] players;
+    public Player[] sortedPlayers;
     public View view;
 
     public Controller(View view){
@@ -23,15 +28,24 @@ public class Controller {
      */
     public int playGolf(){
         getPlayers();
-        dealHand();
+        getHoles();
         try {
-            while(deck.deck.size() > 1) {
-                for (Player p : players) {
-                    view.displayHand(p);
-                    view.displayTopOfDiscard(deck);
-                    getAction(p);
-                    System.out.println(deck.deck.size());
+            outer:
+            while (remainingHoles > 0) {
+                dealHand();
+                while (deck.deck.size() > 1) {
+                    for (Player p : players) {
+                        view.displayHand(p);
+                        view.displayTopOfDiscard(deck);
+                        getAction(p);
+                        if(p.checkIfAllFaceUp()){
+                            endHole();
+                            continue outer;
+                        }
+                        System.out.println(deck.deck.size());
+                    }
                 }
+                endHole();
             }
         }
         catch(Exception quit){
@@ -51,16 +65,31 @@ public class Controller {
         for(int i = 0; i< numberOfPlayers; i++){
             players[i] = new Player();
         }
-        deck = new Deck(numberOfPlayers);
+
 
     }
+
+    /**
+     * Gets the number of holes to play
+     */
+    public void getHoles(){
+        numberOfHoles = view.getHoles();
+        remainingHoles = numberOfHoles;
+
+    }
+
+
+
+
 
 
     /**
      * Gives a hand of 6 cards to each player with 2 random ones facing up. Also initializes discard pile for start of game.
      */
     public void dealHand(){
+        deck = new Deck(numberOfPlayers);
         for(Player p: players){
+            p.hand.clear();
             for(int i = 0; i < 6; i++){
                 p.hand.add(deck.deck.get(deck.deck.size()-1)); //put the "top card" of the deck and puts into player's hand
                 deck.deck.remove(deck.deck.size()-1); //remove the card from the deck so it can't be pulled again
@@ -89,6 +118,15 @@ public class Controller {
         else if(action == 2){
             drawFromDiscard(p);
         }
+        else if(action == 3){
+            if(sortedPlayers == null) {
+                sortedPlayers = players.clone();
+            }
+            view.printScoreboard(numberOfHoles, remainingHoles, sortedPlayers);
+            view.displayHand(p);
+            getAction(p);
+            }
+
     }
 
     /**
@@ -106,6 +144,7 @@ public class Controller {
             if(card != 0) {//user wants to reveal a card
                 if(p.hand.get(card-1).isFaceDown()){
                     p.hand.get(card-1).flipCard();
+                    view.displayHand(p);
                 }
             }
         }
@@ -135,6 +174,22 @@ public class Controller {
         return 0;
     }
 
+    /**
+     * Decrement numberOfHoles for main loop, calculate player scores with rank
+     */
+    public void endHole(){
+        for(Player player: players){
+            player.getScore();
+            view.displayHand(player);
+        }
+        sortedPlayers = players.clone();
+        Arrays.sort(sortedPlayers);
+        view.printScoreboard(numberOfHoles, remainingHoles, sortedPlayers);
+        if(remainingHoles == 1){
+            view.printWinner(sortedPlayers);
+        }
+        remainingHoles--;
 
+    }
 
 }
