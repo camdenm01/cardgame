@@ -28,8 +28,6 @@ class CardTest {
         card.setNumber(5);
         assertThat(card.getNumber()).isEqualTo(5);
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->card.setNumber(-1));
-        Card joker = new Card(Card.Suit.JOKER, 0);
-        assertThat(joker.getNumber()).isEqualTo(0);
     }
 
     @Test

@@ -10,11 +10,11 @@ public class Card {
         DIAMOND,
         HEART,
         SPADE,
-        JOKER
+        //Removed joker and associated tests, not in wikipedia rules
     }
     private Suit suit;
-    private int number; //face cards represented as follows J=11, Q=12, K=13, A=1, Joker=0
-    private int score; // A=1, J,Q=10, K=0, Joker=-2
+    private int number; //face cards represented as follows J=11, Q=12, K=13, A=1,
+    private int score; // A=1, J,Q=10, K=0, 2=-2
     private boolean faceDown = true;
 
     /**
@@ -73,7 +73,7 @@ public class Card {
      * sets card score
      */
     public void setScore(){
-        if(number == 0){
+        if(number == 2){
             score = -2;
         }
         else if (number == 11 || number == 12){

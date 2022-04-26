@@ -19,6 +19,16 @@ public class View {
     }
 
     /**
+     * Get input for number of holes
+     * @return
+     */
+    public int getHoles(){
+        System.out.println("Enter the number of holes you would like to play");
+        int n = scanner.nextInt();
+        return n;
+    }
+
+    /**
      * Prints the current player's hand so they can see their cards in a 2x3 grid. Also shows top of discard pile.
      * @param player current player
      */
@@ -45,7 +55,7 @@ public class View {
      * @return
      */
     public int getAction(){
-        System.out.println("Draw card from [1]deck or [2]discard pile? Enter the corresponding number. Enter -1 to quit.");
+        System.out.println("Draw card from [1]deck or [2]discard pile? [3]View scores. Enter the corresponding number. Enter -1 to quit.");
         int action = scanner.nextInt();
         return action;
     }
@@ -92,6 +102,20 @@ public class View {
      */
     public void quitGame(){
         System.out.println("Thank you for playing!");
+    }
+
+
+    public void printScoreboard(int totalHoles, int remainingHoles, Player[] players){
+        int currentHole = totalHoles - remainingHoles + 1;
+        System.out.println("Current Hole: " + currentHole);
+        System.out.println("Total Holes: " + totalHoles);
+        for(Player player: players){
+            System.out.println("Player " + player.id + ": " + player.score);
+        }
+    }
+
+    public void printWinner(Player[] players){
+        System.out.println("The winner is: Player " + players[0].id);
     }
 
 }
