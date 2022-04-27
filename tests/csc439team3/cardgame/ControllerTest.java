@@ -39,6 +39,7 @@ public class ControllerTest {
         assertThat(controller.playGolf()).isEqualTo(0); //should return exit code of 0
     }
 
+
     //Following tests throw exception because of the exception thrown when a user quits the game
     @Test
     void playerDrawsFromPile() throws Exception {
@@ -79,4 +80,30 @@ public class ControllerTest {
         assertThat(controller.deck.discard.get(0)).isEqualTo(playersFirstCard);
     }
 
+
+    @Test
+    void playerChecksScore() throws Exception {
+        controller = new Controller(new TestView(1, 3, 1,1, 2));
+        controller.getPlayers();
+        controller.dealHand();
+        controller.getAction(controller.players[0]);
+        assertThat(controller.sortedPlayers).isNotEmpty();
+    }
+
+    @Test
+    void holeEndsWhenAllCardsUp(){
+        controller = new Controller(new TestView(1,1,0,1, 1));
+        assertThat(controller.playGolf()).isEqualTo(0);
+    }
+
+    @Test
+    void endHole(){
+        controller = new Controller(new TestView(2,1,1,1, 1));
+        controller.getPlayers();
+        controller.getHoles();
+        controller.dealHand();
+        controller.endHole();
+        assertThat(controller.players[0].score).isNotNull();
+        assertThat(controller.remainingHoles).isEqualTo(0);
+    }
 }

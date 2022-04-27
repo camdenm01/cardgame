@@ -16,6 +16,10 @@ public class Player implements Comparable<Player>{
         idCount++;
     }
 
+    /**
+     * Checks if all cards in hand are face up
+     * @return true if all cards in hand are face up
+     */
     public boolean checkIfAllFaceUp(){
         int countFaceDown = 0;
         for(Card card: hand){
@@ -27,6 +31,10 @@ public class Player implements Comparable<Player>{
         else return false;
     }
 
+    /**
+     * updates and returns player score
+     * @return player score
+     */
     public int getScore(){
         for(int i =0; i < hand.size(); i++){
             score+= hand.get(i).getScore();
@@ -40,6 +48,11 @@ public class Player implements Comparable<Player>{
         return score;
     }
 
+    /**
+     * compare this player with another player by score
+     * @param other other player
+     * @return positive if this player has higher score
+     */
     @Override
     public int compareTo(Player other) {
         return score - other.score;

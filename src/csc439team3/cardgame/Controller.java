@@ -18,6 +18,10 @@ public class Controller {
     public Player[] sortedPlayers;
     public View view;
 
+    /**
+     * Controller constructor accepts view
+     * @param view
+     */
     public Controller(View view){
         this.view = view;
     }
@@ -27,6 +31,7 @@ public class Controller {
      * as long as there are cards in the deck
      */
     public int playGolf(){
+        view.printTitleScreen();
         getPlayers();
         getHoles();
         try {
@@ -42,7 +47,6 @@ public class Controller {
                             endHole();
                             continue outer;
                         }
-                        System.out.println(deck.deck.size());
                     }
                 }
                 endHole();

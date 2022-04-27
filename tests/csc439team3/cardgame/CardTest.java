@@ -58,6 +58,9 @@ class CardTest {
 
     @Test
     void setScore() {
+        card.setNumber(2);
+        card.setScore();
+        assertThat(card.getScore()).isEqualTo(-2);
         card.setNumber(5);
         card.setScore();
         assertThat(card.getScore()).isEqualTo(5);

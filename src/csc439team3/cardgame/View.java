@@ -9,6 +9,15 @@ public class View {
     Scanner scanner = new Scanner(System.in);
 
     /**
+     * Prints title screen
+     */
+    public void printTitleScreen(){
+        System.out.println("------------------");
+        System.out.println("Start playing Golf");
+        System.out.println("------------------\n");
+    }
+
+    /**
      * Get input for the number of players
      * @return number of players
      */
@@ -33,7 +42,7 @@ public class View {
      * @param player current player
      */
     public void displayHand(Player player){
-        System.out.println("Player " + player.id + ":\n");
+        System.out.println("\nPlayer " + player.id + "'s turn:\n");
         for(int i = 0; i<6; i++){
             System.out.print("[" + (i+1) + "]" + " " + player.hand.get(i).printCard());
             if(i==2 || i == 5){
@@ -104,7 +113,12 @@ public class View {
         System.out.println("Thank you for playing!");
     }
 
-
+    /**
+     * Print scoreboard
+     * @param totalHoles number of total holes
+     * @param remainingHoles number of remaining holes
+     * @param players array of players
+     */
     public void printScoreboard(int totalHoles, int remainingHoles, Player[] players){
         int currentHole = totalHoles - remainingHoles + 1;
         System.out.println("Current Hole: " + currentHole);
@@ -114,6 +128,10 @@ public class View {
         }
     }
 
+    /**
+     * Displays winner
+     * @param players
+     */
     public void printWinner(Player[] players){
         System.out.println("The winner is: Player " + players[0].id);
     }
