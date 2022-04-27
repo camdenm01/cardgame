@@ -33,6 +33,10 @@ public class TestView extends View {
      * return action
      */
     public int getAction() {
+        if(action==3) {
+            action = 2;
+            return 3;
+        }
         return action;
     }
 
@@ -40,7 +44,9 @@ public class TestView extends View {
      * return card index to reveal
      */
     public int wantToReveal(){
-        return revealCard;
+        int temp = revealCard;
+        revealCard++;
+        return temp;
     }
 
     @Override
