@@ -48,7 +48,6 @@ public class ControllerTest {
         controller.dealHand();
         //get the card to be swapped and then assert it has changed, and that a card has been discarded
         Card startCard = controller.players[0].hand.get(0);
-        if(startCard.isFaceDown()) startCard.flipCard();
         controller.getAction(controller.players[0]);
         assertThat(controller.players[0].hand.get(0)).isNotEqualTo(startCard);
         assertThat(controller.deck.discard.size()).isGreaterThan(0);
@@ -74,7 +73,6 @@ public class ControllerTest {
         //get the card at the top of the discard pile and then assert it is in player hand, and vice versa
         Card topOfDiscard = controller.deck.discard.get(0);
         Card playersFirstCard = controller.players[0].hand.get(0);
-        if(playersFirstCard.isFaceDown()) playersFirstCard.flipCard();
         controller.getAction(controller.players[0]);
         assertThat(controller.players[0].hand.get(0)).isEqualTo(topOfDiscard);
         assertThat(controller.deck.discard.get(0)).isEqualTo(playersFirstCard);
